@@ -7,6 +7,7 @@
 # 4. Получить данные с странички 1(название, цена)
 import requests
 from bs4 import BeautifulSoup
+import re
 
 url = 'https://www.game29.ru/products?page=1&category=926'
 base_url = 'https://www.game29.ru/products?'
@@ -28,12 +29,9 @@ def name_consol(html):
 
     price = soup.find_all('div', class_='col-lg-2 col-md-2 col-sm-2 col-xs-2 cart-item-price')
 
-    # print(price.strip())
-    # print(price)
-    list_price = []
     for prices in price:
         print(prices.text.strip())
-        list_price.append = prices.text.strip()
+    # print(price)
 
 
 def get_total_page(html):
