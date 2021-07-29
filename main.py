@@ -22,13 +22,13 @@ headers = {
 # .find_all('a')[-2].get('href')
 def name_consol(html):
     soup = BeautifulSoup(html, 'lxml')
-    name = soup.find_all('div', class_='col-lg-5 col-md-5 col-sm-5 col-xs-5 cart-item-name')
+    name = soup.findAll('div', class_='col-lg-5 col-md-5 col-sm-5 col-xs-5 cart-item-name')
     for names in name:
-        print(names.text)
+        print(names.text.strip())
 
     price = soup.find_all('div', class_='col-lg-2 col-md-2 col-sm-2 col-xs-2 cart-item-price')
     for prices in price:
-        print(prices.text)
+        print(prices.text.strip())
 
 
 def get_total_page(html):
