@@ -7,7 +7,7 @@
 # 4. Получить данные с странички 1(название, цена)
 import requests
 from bs4 import BeautifulSoup
-import re
+import csv
 
 url = 'https://www.game29.ru/products?page=1&category=926'
 base_url = 'https://www.game29.ru/products?'
@@ -20,23 +20,22 @@ headers = {
 }
 
 
-# .find_all('a')[-2].get('href')
-def name_consol(html):
+def price_consol(html):
     list_price = []
+    soup = BeautifulSoup(html, 'lxml')
+    price = soup.find_all('div', class_='col-lg-2 col-md-2 col-sm-2 col-xs-2 cart-item-price')
+    for prices in price:
+        list_price.append(prices.text.strip())
+    return list_price
+
+
+def name_consol(html):
     list_name = []
     soup = BeautifulSoup(html, 'lxml')
     name = soup.findAll('div', class_='col-lg-5 col-md-5 col-sm-5 col-xs-5 cart-item-name')
     for names in name:
         list_name.append(names.text.strip())
-
-    price = soup.find_all('div', class_='col-lg-2 col-md-2 col-sm-2 col-xs-2 cart-item-price')
-
-    for prices in price:
-        list_price.append(prices.text.strip())
-
-    print(list_price)
-    print(list_name)
-    # print(price)
+    return list_name
 
 
 def get_total_page(html):
@@ -56,9 +55,15 @@ def get_html(url):
 def main():
     pages = get_total_page(get_html(url))
     # print(pages)
-    print(name_consol(get_html(url)))
-    # for i in range(int(pages) + 1):
-    #     print(base_url + page_part + str(i) + query_part)
+    # print(name_consol(get_html(url)))
+    # print(price_consol(get_html(url)))
+    # Получаем имена
+    for i in range(int(pages) + 1):
+        print(i, ' ', name_consol(get_html(base_url + page_part + str(i) + query_part)))
+
+    # Сохранение в файл
+    with open('console.csv', mode='w') as csvfile:
+        reader = csv.DictReader(csvfile)
 
 
 if __name__ == '__main__':
