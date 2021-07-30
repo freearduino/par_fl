@@ -22,15 +22,20 @@ headers = {
 
 # .find_all('a')[-2].get('href')
 def name_consol(html):
+    list_price = []
+    list_name = []
     soup = BeautifulSoup(html, 'lxml')
     name = soup.findAll('div', class_='col-lg-5 col-md-5 col-sm-5 col-xs-5 cart-item-name')
-    # for names in name:
-    #     print(names.text.strip())
+    for names in name:
+        list_name.append(names.text.strip())
 
     price = soup.find_all('div', class_='col-lg-2 col-md-2 col-sm-2 col-xs-2 cart-item-price')
 
     for prices in price:
-        print(prices.text.strip())
+        list_price.append(prices.text.strip())
+
+    print(list_price)
+    print(list_name)
     # print(price)
 
 
