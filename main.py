@@ -57,13 +57,23 @@ def main():
     # print(pages)
     # print(name_consol(get_html(url)))
     # print(price_consol(get_html(url)))
-    # Получаем имена
-    for i in range(int(pages) + 1):
-        print(i, ' ', name_consol(get_html(base_url + page_part + str(i) + query_part)))
 
+    # Получаем имена
+    # for i in range(int(pages) + 1):
+    #     print(i, ' ', name_consol(get_html(base_url + page_part + str(i) + query_part)))
+    console = []
     # Сохранение в файл
     with open('console.csv', mode='w') as csvfile:
-        reader = csv.DictReader(csvfile)
+        fieldnames = ['Consol', 'Price']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+        # for i in range(int(pages) + 1):
+        console = name_consol(get_html(base_url + page_part + '1' + query_part))
+        # writer.writerows(zip(console))
+        # writer.writerow(console)
+        # print(console)
+        # writer.writerow(name_consol(get_html(base_url + page_part + str(i) + query_part)))
 
 
 if __name__ == '__main__':
